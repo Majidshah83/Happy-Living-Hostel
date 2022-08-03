@@ -1,0 +1,1 @@
+<textarea class="form-control" id="{{$resource}}" name="{{$resource}}">{{$item_details}}</textarea>
