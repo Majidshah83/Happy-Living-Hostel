@@ -10,10 +10,19 @@ class VacantSeatController extends Controller
     //
     public function index()
     {
-        $total_student  = Student::where('status',1)->get()->count();
 
-        $rooms= $total_seats = Room::get();
 
-        return view('backend.admin.vacant_seats.index',compact('total_student','rooms'));
-    }
+         //Total seats
+         $total_capicity = Room::get()->sum('capacity');
+         //total student
+         $total_vacant_seats  = Student::where('status',1)->get()->count();
+         $rooms= Room::get();
+        //  $total_vant=$total_capicity-$total_vacant_seats;
+        // dd($total_vant);
+
+
+
+return view('backend.admin.vacant_seats.index',compact('total_vacant_seats','rooms','total_capicity'
+));
+}
 }

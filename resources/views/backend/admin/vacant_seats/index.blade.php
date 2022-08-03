@@ -5,8 +5,13 @@
         <!--Page header-->
         <div class="page-header">
             <div class="page-leftheader">
-                <h4 class="page-title">Vacant Seats</h4>
+                <h4 class="page-title" >Vacant Seats</h4>
+
             </div>
+            <?php
+           $total_vant=$total_capicity-$total_vacant_seats;
+            ?>
+             <h5 style="color:black !important;">Total Vacant Seats: {{$total_vant}}</h5>
         </div>
         <!--Row-->
         @include('backend.admin.components.messages')
@@ -17,7 +22,9 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">List Vacant Seats</h3>
+
                         <div class="card-options">
+
 
                         </div>
                     </div>
@@ -34,6 +41,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                       @if(count($rooms)>0)
                                         @foreach($rooms as $room)
                                         <tr>
                                             <td>
@@ -48,14 +56,24 @@
                                             <td>
                                                 {!! $room->capacity !!}
                                             </td>
-                                         <?php
-                                         $vacant=$total_student-$room->capacity;
-                                         ?>
+                                                       @php
+                                                         $unoccopied = 0;
+                                                            $occopied = 0;
+                                                            $unoccopied = checkSpaceRoom(@$room->capacity,@$room->id);
+                                                            if ($room->capacity > 0) {
+                                                                $occopied = $room->capacity - $unoccopied;
+                                                             }
 
+                                                        @endphp
 
-                                           @if($vacant>0) <td>{{$vacant}}</td>@else<td>0</td>@endif
+                                      <td> {{$unoccopied}}</td>
                                         </tr>
                                  @endforeach
+                                 @else
+                                 <td>
+                                   Room data not Found
+                                 </td>
+                                 @endif
                                 </tbody>
                             </table>
                         </div>
